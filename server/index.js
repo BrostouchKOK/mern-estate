@@ -20,5 +20,4 @@ app.listen(3000, () => {
 });
 
 // mv .git ../    ==>use to move git to root directory
-// password: IT3
-// email: IT3.Dev
+
