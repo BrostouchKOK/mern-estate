@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(true);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,11 +30,10 @@ const SignUp = () => {
       console.log(data);
       if (data.success === false) {
         setLoading(false);
-        setError(data.message);
+        toast.error(data.message);
         return
       }
       setLoading(false);
-      setError(null)
 
       if(data.success === true){
         toast.success(data.message);
@@ -75,19 +73,17 @@ const SignUp = () => {
         />
 
         <button className="uppercase p-3 rounded-lg bg-blue-500 text-white hover:opacity-95 disabled:opacity-80 cursor-pointer">
-          Sign Up
+          {loading? "Loading..." : "Sign Up"}
         </button>
       </form>
 
       <div className="flex gap-2 my-5">
         <p>Have an account?</p>
-        <Link to={"/"}>
+        <Link to={"/sign-in"}>
           <span className="text-blue-700 hover:underline">Sign in</span>
         </Link>
       </div>
-      {
-        error && <p className="text-red-500 mt-5">{error}</p>
-      }
+     
     </div>
   );
 };
