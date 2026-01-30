@@ -41,7 +41,7 @@ const SignIn = () => {
 
       if(data.success === true){
         toast.success(data.message);
-        navigate("/")
+        navigate("/profile")
       }
     } catch (error) {
       dispatch(signInFailure());
