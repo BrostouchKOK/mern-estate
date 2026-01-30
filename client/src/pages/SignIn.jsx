@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {signInStart,signInSuccess,signInFailure} from "../redux/user/userSlice"
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const {loading} =useSelector((state)=>state.user)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,7 +20,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -28,19 +31,19 @@ const SignIn = () => {
 
       const data = await res.json();
       if (data.success === false) {
-        setLoading(false);
+        dispatch(signInFailure());
         toast.error(data.message)
-        // setError(data.message);
         return
       }
-      setLoading(false);
+      
+      dispatch(signInSuccess(data))
 
       if(data.success === true){
         toast.success(data.message);
         navigate("/")
       }
     } catch (error) {
-      setLoading(false);
+      dispatch(signInFailure());
       toast.error(error.message);
 
     }
@@ -66,7 +69,7 @@ const SignIn = () => {
         />
 
         <button className="uppercase p-3 rounded-lg bg-blue-500 text-white hover:opacity-95 disabled:opacity-80 cursor-pointer">
-          {loading ? "Loading" : "Sign In"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
 
