@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -71,9 +72,10 @@ const SignUp = () => {
           onChange={handleChange}
         />
 
-        <button className="uppercase p-3 rounded-lg bg-blue-500 text-white hover:opacity-95 disabled:opacity-80 cursor-pointer">
+        <button type="submit" className="uppercase p-3 rounded-lg bg-blue-500 text-white hover:opacity-95 disabled:opacity-80 cursor-pointer">
           {loading? "Loading..." : "Sign Up"}
         </button>
+        <OAuth/>
       </form>
 
       <div className="flex gap-2 my-5">
